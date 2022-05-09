@@ -1,0 +1,46 @@
+Name: Email Setup
+Description: Sets up code to email with RDCOMClient
+Binding: email_setup
+Interactive: false
+
+Name: Setup Data Path
+Description: Sets the data_path variable
+Binding: setupDataPath
+Interactive: false
+
+Name: Setup Vacancy Path
+Description: Sets the vacancy_path variable
+Binding: setupVacancyPath
+Interactive: false
+
+Name: Read JPACT file
+Description: Inserts code to read the processed JPACT file
+Binding: readJPACT
+Interactive: false
+
+Name: Read Jpact file date
+Description: Inserts code to read the processed JPACT file date
+Binding: readJpactDate
+Interactive: false
+
+Name: Setup Source Main
+Description: Inserts code to source the main.R functions
+Binding: setupSourceMain
+Interactive: false
+
+Name: Setup Packages
+Description: Inserts code to load the usual packages needed
+Binding: setupPackages
+Interactive: false
+
+Name: Setup Read FWF
+Description: Inserts code to read fixed-width-files
+Binding: setupReadFwf
+Interactive: false
+
+Name: Setup Save RDS
+Description: Inserts code to save files as .rds
+Binding: setupSaveRds
+Interactive: false
+
+

@@ -1,0 +1,14 @@
+Package: raddish
+Type: Package
+Title: R Add-ins to Make Life Easier
+Version: 0.1.0
+Author: George Miranda
+Imports:
+  shiny (>= 0.13),
+  rstudioapi (>= 0.13)
+Maintainer: George Miranda <jmirandajr@hr.lacounty.gov>
+Description: More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+License: GNU General Public License
+Encoding: UTF-8
+LazyData: true

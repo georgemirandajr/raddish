@@ -1,0 +1,13 @@
+Binding: createProject
+Title: Create Analysis Project Template
+Parameter: text
+Widget: TextInput
+Label: File Path to New Project Folder
+Default: On
+Position: left
+
+Parameter: text
+Widget: TextInput
+Label: Name Your New Project
+Default: On
+Position: left
