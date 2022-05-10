@@ -1,6 +1,6 @@
 createProject <- function(path, projectName, ...) {
 
-  # Create folder for the project
+  # Create a folder for the project
   dir.create( paste0( path, "/", projectName) )
 
   # Create the sub-folders
