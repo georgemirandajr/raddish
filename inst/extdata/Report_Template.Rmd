@@ -1,0 +1,45 @@
+---
+title: "Workforce Statistics"
+author: "WED"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output: html_document
+---
+
+# Workforce Statistics
+
+```{r packages, echo=FALSE, include=FALSE}
+pkgs = c( "tailwindr", "ggplot2", 
+         "ggthemes", "scales")
+sapply(pkgs, require, character.only = TRUE)
+```
+
+```{r load-data, echo=FALSE}
+# Import data needed by your reports.
+```
+
+### Key Takeaways
+You can write a brief summary of your analysis for management or other analysts.
+- You can use unordered lists like this one.
+- Add emphasis using **bold** or *italics*.  
+- Insert dynamic data with R code directly in-line, like today's date is `r Sys.Date()`.
+
+#### A Picture is Worth 1,000 Rows of Data
+Display visualizations using the `ggplot2` package or other graphics packages.   
+```{r fte-count-historical, echo=FALSE, fig.width=9}
+mtcars <- mutate(mtcars,cyl=factor(cyl,ordered=TRUE,levels=c(4,6,8)))
+head(mtcars,n=6)
+
+ggplot(mtcars,aes(x=mpg)) + 
+  geom_histogram(binwidth=5) +
+  labs(title = "Cars Data", x = "Miles Per Gallon", y = "Number of Cars") +
+  theme_hc()
+
+```
+
+
+Using Rmarkdown, you can write neat formulas like the vacancy rate formula 
+$$
+\frac{ (Authorized FTE - Filled Incumbents) } { (Authorized FTE - Filled Incumbents)+Incumbents } * 100 
+$$
+
+Output this report as an HTML document or change the output to a Word doc.
