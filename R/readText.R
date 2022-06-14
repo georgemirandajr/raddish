@@ -1,0 +1,87 @@
+library(shiny)
+library(miniUI)
+require(rstudioapi)
+library(shinycssloaders)
+library(data.table)
+library(readr)
+
+readText = function() {
+
+  ui <- miniPage(
+    gadgetTitleBar("Read an e-HR extract text file"),
+    miniContentPanel(
+
+      # Explain what will happen
+      helpText( "Choose the name of the extract file to read" ),
+      uiOutput( "chooseSpec_ui" ),
+      fileInput( "choose_file", "Choose a File", accept = "*.txt" ),
+
+      helpText("Provide a name for the loaded data. It can't start with a number or contain spaces."),
+      textInput("objName", ""),
+      actionButton("read_file", "Read File"),
+      tableOutput("fileInfo")
+    )
+  )
+
+  server <- function(input, output, session) {
+    options(shiny.maxRequestSize=9000*1024^2)
+
+    output$chooseSpec_ui <- renderUI({
+      file_specs = raddish::file_specs
+
+      selectInput("choose_spec", label = "",
+                  choices = unique( file_specs$SpecName),
+                  selected = "JPACT")
+    })
+
+    # User chooses to read e-HR extract text file
+    observeEvent( input$read_file, {
+
+      file <- input$choose_file
+
+      output$fileInfo <- renderTable({
+        file
+      })
+
+      ext <- tools::file_ext(file$datapath)
+
+      req(file)
+      validate( need( ext == "txt", "Please upload a txt file") )
+
+      chosen_specs = raddish::file_specs[ raddish::file_specs$SpecName == input$choose_spec, ]
+
+      data <- setDT(readr::read_fwf( file$datapath,
+                                    progress = FALSE,
+                                    col_types = paste(rep('c', length( chosen_specs$FieldName ) ), collapse = ''),
+                                    fwf_positions( chosen_specs$Start,
+                                                   chosen_specs$End,
+                                                   col_names = chosen_specs$FieldName) ) )
+
+      assign( input$objName, value = data, envir = globalenv() )
+
+      showModal(
+        modalDialog(
+          title = "Complete",
+          p( paste0(
+            "File is done loading.")
+          )
+        )
+      )
+
+    })
+
+    # Listen for the 'done' event.
+    observeEvent(input$done, {
+      stopApp()
+    })
+  }
+
+  # We'll use a dialog viwer
+  viewer <- dialogViewer("Import Extract File")
+
+  runGadget(ui, server, viewer = viewer)
+
+}
+
+# Call the addin
+# readText()

@@ -14,14 +14,19 @@ Binding: setupVacancyPath
 Interactive: false
 
 Name: Read JPACT file
-Description: Inserts code to read the processed JPACT file
+Description: Insert code or directly read the processed JPACT file
 Binding: readJPACT
-Interactive: false
+Interactive: true
 
 Name: Read Jpact file date
-Description: Inserts code to read the processed JPACT file date
+Description: Insert code or directly read the processed JPACT file date
 Binding: readJpactDate
-Interactive: false
+Interactive: true
+
+Name: Read e-HR Extract text file
+Description: Read an e-HR extract text file
+Binding: readText
+Interactive: true
 
 Name: Setup Source Main
 Description: Inserts code to source the main.R functions
@@ -43,4 +48,7 @@ Description: Inserts code to save files as .rds
 Binding: setupSaveRds
 Interactive: false
 
-
+Name: Create Project
+Description: Creates a custom project folder
+Binding: createProject
+Interactive: true
