@@ -1,54 +1,64 @@
-Name: Email Setup
-Description: Sets up code to email with RDCOMClient
-Binding: email_setup
-Interactive: false
+Name: Create New Analysis
+Description: Creates a custom project folder for a new analysis
+Binding: createProject
+Interactive: true
 
-Name: Setup Data Path
-Description: Sets the data_path variable
-Binding: setupDataPath
-Interactive: false
-
-Name: Setup Vacancy Path
-Description: Sets the vacancy_path variable
-Binding: setupVacancyPath
-Interactive: false
-
-Name: Read JPACT file
+Name: Import JPACT file
 Description: Insert code or directly read the processed JPACT file
 Binding: readJPACT
 Interactive: true
 
-Name: Read Jpact file date
+Name: Import Jpact file date
 Description: Insert code or directly read the processed JPACT file date
 Binding: readJpactDate
 Interactive: true
 
-Name: Read e-HR Extract text file
-Description: Read an e-HR extract text file
-Binding: readText
+Name: Import any e-HR Extract fixed-width text file
+Description: Read any e-HR extract fixed-width file
+Binding: importFWF
 Interactive: true
 
-Name: Setup Source Main
-Description: Inserts code to source the main.R functions
-Binding: setupSourceMain
-Interactive: false
+Name: Filter current employees
+Description: Filter JPACT for a list of current employees. Requires specific columns.
+Binding: listEmployees
+Interactive: true
 
-Name: Setup Packages
-Description: Inserts code to load the usual packages needed
-Binding: setupPackages
-Interactive: false
+Name: Save As Excel
+Description: Save a dataset as an Excel spreadsheet.
+Binding: saveWorkbook
+Interactive: true
 
-Name: Setup Read FWF
+Name: Read FWF Snippet
 Description: Inserts code to read fixed-width-files
 Binding: setupReadFwf
 Interactive: false
 
-Name: Setup Save RDS
+Name: Source Helper Functions Snippet
+Description: Inserts code to source the main.R functions
+Binding: setupSourceMain
+Interactive: false
+
+Name: Data Path Snippet
+Description: Sets the data_path variable
+Binding: setupDataPath
+Interactive: false
+
+Name: Vacancy Path Snippet
+Description: Sets the vacancy_path variable
+Binding: setupVacancyPath
+Interactive: false
+
+Name: Load Packages Snippet
+Description: Inserts code to load the usual packages needed
+Binding: setupPackages
+Interactive: false
+
+Name: Save RDS Snippet
 Description: Inserts code to save files as .rds
 Binding: setupSaveRds
 Interactive: false
 
-Name: Create Project
-Description: Creates a custom project folder
-Binding: createProject
-Interactive: true
+Name: Email Setup Snippet
+Description: Sets up code to email with RDCOMClient
+Binding: email_setup
+Interactive: false

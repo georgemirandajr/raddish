@@ -5,7 +5,7 @@ library(shinycssloaders)
 library(data.table)
 library(readr)
 
-readText = function() {
+importFWF = function() {
 
   ui <- miniPage(
     gadgetTitleBar("Read an e-HR extract text file"),
@@ -18,8 +18,7 @@ readText = function() {
 
       helpText("Provide a name for the loaded data. It can't start with a number or contain spaces."),
       textInput("objName", ""),
-      actionButton("read_file", "Read File"),
-      tableOutput("fileInfo")
+      actionButton("read_file", "Read File")
     )
   )
 
@@ -39,10 +38,6 @@ readText = function() {
 
       file <- input$choose_file
 
-      output$fileInfo <- renderTable({
-        file
-      })
-
       ext <- tools::file_ext(file$datapath)
 
       req(file)
@@ -50,20 +45,23 @@ readText = function() {
 
       chosen_specs = raddish::file_specs[ raddish::file_specs$SpecName == input$choose_spec, ]
 
-      data <- setDT(readr::read_fwf( file$datapath,
-                                    progress = FALSE,
-                                    col_types = paste(rep('c', length( chosen_specs$FieldName ) ), collapse = ''),
-                                    fwf_positions( chosen_specs$Start,
-                                                   chosen_specs$End,
-                                                   col_names = chosen_specs$FieldName) ) )
+      data <- setDT( readr::read_fwf( file$datapath,
+                                      progress = FALSE,
+                                      col_types = paste(rep('c', length( chosen_specs$FieldName ) ), collapse = ''),
+                                      fwf_positions( chosen_specs$Start,
+                                                     chosen_specs$End,
+                                                     col_names = chosen_specs$FieldName) ) )
 
-      assign( input$objName, value = data, envir = globalenv() )
+      assign( input$objName, value = data, pos = 1, envir = globalenv() )
 
       showModal(
         modalDialog(
           title = "Complete",
-          p( paste0(
-            "File is done loading.")
+          p(
+            paste0(
+              input$objName,
+              " is done loading. It may take a few moments to appear in your environment."
+            )
           )
         )
       )
@@ -72,7 +70,11 @@ readText = function() {
 
     # Listen for the 'done' event.
     observeEvent(input$done, {
-      stopApp()
+      stopApp( input$objName )
+    })
+
+    observeEvent(input$cancel, {
+      stopApp(NULL)
     })
   }
 
@@ -84,4 +86,4 @@ readText = function() {
 }
 
 # Call the addin
-# readText()
+# importFWF()

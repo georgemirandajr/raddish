@@ -9,12 +9,14 @@ Imports:
   miniUI (>= 0.1.1),
   rstudioapi (>= 0.13),
   data.table (>= 1.13.6),
-  readr (>= 1.4.0)
+  readr (>= 1.4.0),
+  openxlsx (>= 4.2.3),
+  purrr (>= 0.3.4),
 Suggests:
   shinycssloaders
 Maintainer: George Miranda <jmirandajr@hr.lacounty.gov>
 Description: Create custom project folders, read/save data, and utilize standard calculations such as fte and turnover.
-    Functionality is specific to Los Angeles County Department of Human Resources.
+    All functionality is specific to Los Angeles County Department of Human Resources.
 License: GNU General Public License
 Encoding: UTF-8
 LazyData: true
