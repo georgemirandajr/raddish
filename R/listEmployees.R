@@ -3,7 +3,6 @@ library(miniUI)
 require(rstudioapi)
 library(shinycssloaders)
 library(data.table)
-library(readr)
 library(purrr)
 
 employee_list_at <- function( df, date = Sys.Date(),
