@@ -1,6 +1,6 @@
 Name: Create New Analysis
 Description: Creates a custom project folder for a new analysis
-Binding: createProject
+Binding: new_analysis
 Interactive: true
 
 Name: Import JPACT file
@@ -20,12 +20,12 @@ Interactive: true
 
 Name: Filter current employees
 Description: Filter JPACT for a list of current employees. Requires specific columns.
-Binding: listEmployees
+Binding: list_emps
 Interactive: true
 
 Name: Save As Excel
 Description: Save a dataset as an Excel spreadsheet.
-Binding: saveWorkbook
+Binding: saveAsExcel
 Interactive: true
 
 Name: Read FWF Snippet
