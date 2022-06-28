@@ -77,7 +77,7 @@ new_analysis <- function() {
 
       # Here is where your Shiny application might now go and affect the
       # contents of a document open in RStudio.
-      raddish::createProject( dir_path[['path']], input$folder_name_input )
+      createProject( dir_path[['path']], input$folder_name_input )
 
       if ( input$switch_dir ) {
         setwd( paste0( dir_path[['path']], "/", input$folder_name_input ) )
