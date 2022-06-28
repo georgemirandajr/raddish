@@ -1,28 +1,28 @@
-library(shiny)
-library(miniUI)
+require(shiny)
+require(miniUI)
 require(rstudioapi)
-library(shinycssloaders)
+require(shinycssloaders)
 
 readJPACT = function() {
 
-  ui <- miniPage(
-    gadgetTitleBar("Import the processed JPACT data"),
-    miniContentPanel(
+  ui <- miniUI::miniPage(
+    miniUI::gadgetTitleBar("Import the processed JPACT data"),
+    miniUI::miniContentPanel(
 
       # Explain what will happen
-      helpText("Insert code in an open script that reads the processed JPACT file"),
-      actionButton("insert_code", "Insert code"),
+      shiny::helpText("Insert code in an open script that reads the processed JPACT file"),
+      shiny::actionButton("insert_code", "Insert code"),
 
-      helpText("Import the processed JPACT file to analyze."),
-      helpText("This may take 1-2 minutes."),
-      actionButton("read_jpact", "Import data"),
+      shiny::helpText("Import the processed JPACT file to analyze."),
+      shiny::helpText("This may take 1-2 minutes."),
+      shiny::actionButton("read_jpact", "Import data"),
 
     )
   )
 
   server <- function(input, output, session) {
 
-    observeEvent( input$insert_code, {
+    shiny::observeEvent( input$insert_code, {
       code_readJPACT = rstudioapi::insertText(
         "# Read jpact data
     if ( !exists('jpact') ) {
@@ -32,16 +32,16 @@ readJPACT = function() {
     })
 
     # User chooses to read jpact
-    observeEvent( input$read_jpact, {
+    shiny::observeEvent( input$read_jpact, {
 
       jpact <<- readRDS( 'S:/Advantage Data/DHR-Analytics/data/jpact.rds' )
 
       update_time = format( Sys.time(), "%I:%M %p at %b %d, %Y")
 
-      showModal(
-        modalDialog(
+      shiny::showModal(
+        shiny::modalDialog(
           title = "Complete",
-          p( paste0(
+          shiny::p( paste0(
             "JPACT is done refreshing at ", update_time, " with ",
             format( nrow( jpact ), big.mark = ","), " rows and ",
             ncol( jpact ), " columns",
@@ -52,24 +52,24 @@ readJPACT = function() {
 
     })
 
-    output$spinner <- renderUI({
+    output$spinner <- shiny::renderUI({
       if ( input$read_jpact ) {
-        shinycssloaders::withSpinner(uiOutput("dummy") )
+        shinycssloaders::withSpinner( shiny::uiOutput("dummy") )
       } else {
         NULL
       }
     })
 
     # Listen for the 'done' event.
-    observeEvent(input$done, {
-      stopApp()
+    shiny::observeEvent(input$done, {
+      shiny::stopApp()
     })
   }
 
   # We'll use a dialog viwer
-  viewer <- dialogViewer("JPACT File")
+  viewer <- shiny::dialogViewer("JPACT File")
 
-  runGadget(ui, server, viewer = viewer)
+  shiny::runGadget(ui, server, viewer = viewer)
 
 }
 

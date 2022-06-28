@@ -1,40 +1,40 @@
-library(shiny)
-library(miniUI)
+require(shiny)
+require(miniUI)
 require(rstudioapi)
-library(shinycssloaders)
-library(data.table)
-library(readr)
+require(shinycssloaders)
+require(data.table)
+require(readr)
 
 importFWF = function() {
 
-  ui <- miniPage(
-    gadgetTitleBar("Read an e-HR extract text file"),
-    miniContentPanel(
+  ui <- miniUI::miniPage(
+    miniUI::gadgetTitleBar("Read an e-HR extract text file"),
+    miniUI::miniContentPanel(
 
       # Explain what will happen
-      helpText( "Choose the name of the extract file to read" ),
-      uiOutput( "chooseSpec_ui" ),
-      fileInput( "choose_file", "Choose a File", accept = "*.txt" ),
+      shiny::helpText( "Choose the name of the extract file to read" ),
+      shiny::uiOutput( "chooseSpec_ui" ),
+      shiny::fileInput( "choose_file", "Choose a File", accept = "*.txt" ),
 
-      helpText("Provide a name for the loaded data. It can't start with a number or contain spaces."),
-      textInput("objName", ""),
-      actionButton("read_file", "Read File")
+      shiny::helpText("Provide a name for the loaded data. It can't start with a number or contain spaces."),
+      shiny::textInput("objName", ""),
+      shiny::actionButton("read_file", "Read File")
     )
   )
 
   server <- function(input, output, session) {
     options(shiny.maxRequestSize=9000*1024^2)
 
-    output$chooseSpec_ui <- renderUI({
+    output$chooseSpec_ui <- shiny::renderUI({
       file_specs = raddish::file_specs
 
-      selectInput("choose_spec", label = "",
-                  choices = unique( file_specs$SpecName),
-                  selected = "JPACT")
+      shiny::selectInput("choose_spec", label = "",
+                         choices = unique( file_specs$SpecName),
+                         selected = "JPACT")
     })
 
     # User chooses to read e-HR extract text file
-    observeEvent( input$read_file, {
+    shiny::observeEvent( input$read_file, {
 
       file <- input$choose_file
 
@@ -45,17 +45,17 @@ importFWF = function() {
 
       chosen_specs = raddish::file_specs[ raddish::file_specs$SpecName == input$choose_spec, ]
 
-      data <- setDT( readr::read_fwf( file$datapath,
-                                      progress = FALSE,
-                                      col_types = paste(rep('c', length( chosen_specs$FieldName ) ), collapse = ''),
-                                      fwf_positions( chosen_specs$Start,
-                                                     chosen_specs$End,
-                                                     col_names = chosen_specs$FieldName) ) )
+      data <- data.table::setDT( readr::read_fwf( file$datapath,
+                                                  progress = FALSE,
+                                                  col_types = paste(rep('c', length( chosen_specs$FieldName ) ), collapse = ''),
+                                                  readr::fwf_positions( chosen_specs$Start,
+                                                                        chosen_specs$End,
+                                                                        col_names = chosen_specs$FieldName) ) )
 
       assign( input$objName, value = data, pos = 1, envir = globalenv() )
 
-      showModal(
-        modalDialog(
+      shiny::showModal(
+        shiny::modalDialog(
           title = "Complete",
           p(
             paste0(
@@ -69,19 +69,19 @@ importFWF = function() {
     })
 
     # Listen for the 'done' event.
-    observeEvent(input$done, {
-      stopApp( input$objName )
+    shiny::observeEvent(input$done, {
+      shiny::stopApp( input$objName )
     })
 
-    observeEvent(input$cancel, {
-      stopApp(NULL)
+    shiny::observeEvent(input$cancel, {
+      shiny::stopApp(NULL)
     })
   }
 
   # We'll use a dialog viwer
-  viewer <- dialogViewer("Import Extract File")
+  viewer <- shiny::dialogViewer("Import Extract File")
 
-  runGadget(ui, server, viewer = viewer)
+  shiny::runGadget(ui, server, viewer = viewer)
 
 }
 

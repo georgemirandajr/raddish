@@ -1,5 +1,6 @@
 # Email Setup Snippet
 require(rstudioapi)
+
 email_setup = function() {
   rstudioapi::insertText("
   require(RDCOMClient)

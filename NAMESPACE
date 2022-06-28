@@ -2,9 +2,9 @@ exportPattern("^[[:alpha:]]+")
 #' @importFrom magrittr %>%
 #' @import shiny
 #' @import miniUI
-#' @importFrom rstudioapi insertText
+#' @import rstudioapi
 #' @import data.table
-#' @importFrom readr read_fwf
+#' @import readr
 #' @import openxlsx
 #' @importFrom purrr map
 #' @import openxlsx

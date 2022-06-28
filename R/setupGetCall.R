@@ -1,14 +1,19 @@
 # Create a Get call to an API
 # Always refer to your specific API documentation
+require(rstudioapi)
 
 setupGetCall = function() {
   rstudioapi::insertText(
-    "# Base URL
+    "
+# Base URL
 url = ''
+
 # Host (website domain)
 hostName = ''
+
 # Usually a public key (not encoded)
 api_key = ''
+
 # Secret key is usually encoded
 secretKey = ''
 
@@ -27,6 +32,7 @@ api_data = fromJSON(
   rawToChar(
     res$content
   )
-)"
+)
+"
   )
 }

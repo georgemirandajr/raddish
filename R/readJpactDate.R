@@ -1,27 +1,27 @@
-library(shiny)
-library(miniUI)
+require(shiny)
+require(miniUI)
 require(rstudioapi)
-library(shinycssloaders)
+require(shinycssloaders)
 
 readJpactDate = function() {
 
-  ui <- miniPage(
-    gadgetTitleBar("Import the processed JPACT data"),
-    miniContentPanel(
+  ui <- miniUI::miniPage(
+    miniUI::gadgetTitleBar("Import the processed JPACT data"),
+    miniUI::miniContentPanel(
 
       # Explain what will happen
-      helpText("Insert code in an open script that reads the JPACT file date"),
-      actionButton("insert_code", "Insert code"),
+      shiny::helpText("Insert code in an open script that reads the JPACT file date"),
+      shiny::actionButton("insert_code", "Insert code"),
 
-      helpText("Directly read the JPACT file date."),
-      actionButton("read_jpact", "Import date"),
+      shiny::helpText("Directly read the JPACT file date."),
+      shiny::actionButton("read_jpact", "Import date"),
 
     )
   )
 
   server <- function(input, output, session) {
 
-    observeEvent( input$insert_code, {
+    shiny::observeEvent( input$insert_code, {
       code_read = rstudioapi::insertText(
         "# Read jpact date
     if ( !exists('jpact_date') ) {
@@ -31,14 +31,14 @@ readJpactDate = function() {
     })
 
     # User chooses to read jpact
-    observeEvent( input$read_jpact, {
+    shiny::observeEvent( input$read_jpact, {
 
       jpact_date <<- readRDS( 'S:/Advantage Data/DHR-Analytics/data/jpact_file_date.rds' )
 
-      showModal(
-        modalDialog(
+      shiny::showModal(
+        shiny::modalDialog(
           title = "Complete",
-          p( paste0(
+          shiny::p( paste0(
             "JPACT file date is now updated. The date of the file is ",
             jpact_date,
             ". You can close this window now.")
@@ -48,15 +48,15 @@ readJpactDate = function() {
     })
 
     # Listen for the 'done' event.
-    observeEvent(input$done, {
-      stopApp()
+    shiny::observeEvent(input$done, {
+      shiny::stopApp()
     })
   }
 
   # We'll use a dialog viwer
-  viewer <- dialogViewer("JPACT File")
+  viewer <- shiny::dialogViewer("JPACT File")
 
-  runGadget(ui, server, viewer = viewer)
+  shiny::runGadget(ui, server, viewer = viewer)
 
 }
 

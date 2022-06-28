@@ -1,4 +1,5 @@
 require(rstudioapi)
+
 setupReadFwf = function() {
   rstudioapi::insertText(
     "data = setDT(readr::read_fwf( fname,

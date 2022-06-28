@@ -1,5 +1,5 @@
-library(shiny)
-library(miniUI)
+require(shiny)
+require(miniUI)
 
 new_analysis <- function() {
   createProject <- function(path, projectName, ...) {
@@ -28,39 +28,39 @@ new_analysis <- function() {
 
   }
 
-  ui <- miniPage(
-    gadgetTitleBar("Create a Custom Project Folder"),
-    miniContentPanel(
+  ui <- miniUI::miniPage(
+    miniUI::gadgetTitleBar("Create a Custom Project Folder"),
+    miniUI::miniContentPanel(
       ## Name the new project
-      textInput("folder_name_input", "New Project Name"),
+      shiny::textInput("folder_name_input", "New Project Name"),
 
       # Choose where to create the new project
-      helpText("Choose a folder create your project in"),
-      actionButton("choose_dir", "Choose folder"),
+      shiny::helpText("Choose a folder create your project in"),
+      shiny::actionButton("choose_dir", "Choose folder"),
 
       # Change to this directory?
-      checkboxInput("switch_dir", "Switch to this folder"),
+      shiny::checkboxInput("switch_dir", "Switch to this folder"),
 
       # Show the selected path to the new project
-      uiOutput("created_your_folder")
+      shiny::uiOutput("created_your_folder")
     )
   )
 
   server <- function(input, output, session) {
 
     # Provide a default directory
-    dir_path = reactiveValues( path= getwd() )
+    dir_path = shiny::reactiveValues( path= getwd() )
 
     # Update the selected path
-    observeEvent( input$choose_dir, {
+    shiny::observeEvent( input$choose_dir, {
       dir_path$path = choose.dir()
       dir_path$path = gsub("\\\\", "/", dir_path$path)
     })
 
     ## Your reactive logic goes here.
-    observeEvent( input$folder_name_input, {
+    shiny::observeEvent( input$folder_name_input, {
 
-      output$created_your_folder <- renderUI({
+      output$created_your_folder <- shiny::renderUI({
         p(
           paste0(
             "Creating ", dir_path[['path']], "/", input$folder_name_input
@@ -73,11 +73,11 @@ new_analysis <- function() {
     # Listen for the 'done' event. This event will be fired when a user
     # is finished interacting with your application, and clicks the 'done'
     # button.
-    observeEvent(input$done, {
+    shiny::observeEvent(input$done, {
 
       # Here is where your Shiny application might now go and affect the
       # contents of a document open in RStudio.
-      createProject( dir_path[['path']], input$folder_name_input )
+      raddish::createProject( dir_path[['path']], input$folder_name_input )
 
       if ( input$switch_dir ) {
         setwd( paste0( dir_path[['path']], "/", input$folder_name_input ) )
@@ -85,14 +85,14 @@ new_analysis <- function() {
 
       # At the end, your application should call 'stopApp()' here, to ensure that
       # the gadget is closed after 'done' is clicked.
-      stopApp()
+      shiny::stopApp()
     })
   }
 
   # We'll use a dialog viwer
-  viewer <- dialogViewer("New Analysis Project")
+  viewer <- shiny::dialogViewer("New Analysis Project")
 
-  runGadget(ui, server, viewer = viewer)
+  shiny::runGadget(ui, server, viewer = viewer)
 
 }
 
