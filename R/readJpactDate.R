@@ -25,7 +25,7 @@ readJpactDate = function() {
       code_read = rstudioapi::insertText(
         "# Read jpact date
     if ( !exists('jpact_date') ) {
-    jpact_date = readRDS( paste0( data_path, 'jpact_file_date.rds') )
+    jpact_date = readRDS( paste0( data_path, 'output/jpact_file_date.rds') )
     }"
       )
     })
@@ -33,7 +33,7 @@ readJpactDate = function() {
     # User chooses to read jpact
     shiny::observeEvent( input$read_jpact, {
 
-      jpact_date <<- readRDS( 'S:/Advantage Data/DHR-Analytics/data/jpact_file_date.rds' )
+      jpact_date <<- readRDS( 'S:/Advantage Data/DHR-Analytics/data/output/jpact_file_date.rds' )
 
       shiny::showModal(
         shiny::modalDialog(

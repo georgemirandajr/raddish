@@ -11,10 +11,11 @@ Imports:
   data.table (>= 1.13.6),
   readr (>= 1.4.0),
   openxlsx (>= 4.2.3),
-  purrr (>= 0.3.4),
-  magrittr (>= 2.0.1)
+  purrr (>= 0.3.4)
 Suggests:
-  shinycssloaders
+  shinycssloaders,
+  tailwindr,
+  shiny.tailwind
 Maintainer: George Miranda <jmirandajr@hr.lacounty.gov>
 Description: Create custom project folders, read/save data, and utilize standard calculations such as fte and turnover.
     All functionality is specific to Los Angeles County Department of Human Resources.

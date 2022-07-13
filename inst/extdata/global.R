@@ -9,7 +9,7 @@ sapply(pkgs, require, character.only = TRUE)
 project_path = '//ISDOWFSV04.HOSTED.LAC.COM/D100SHARE/Advantage Data/YOUR PROJECT FOLDER PATH/'
 
 # PATH TO JPACT SOURCE DATA
-source_path = '//ISDOWFSV04.HOSTED.LAC.COM/D100SHARE/Advantage Data/DHR-Analytics/data/'
+root = '//ISDOWFSV04.HOSTED.LAC.COM/D100SHARE/Advantage Data/DHR-Analytics/'
 
 # If you want to save data to a SharePoint folder
 user_root = Sys.getenv("USERPROFILE")
@@ -21,17 +21,17 @@ share_point_path = paste0( user_root, share_point_path )
 # Call Main Helper --------------------------------------------------------
 
 # IMPORTS HELPERS TO DO THINGS LIKE CALCULATE INCUMBENTS, TURNOVER, ETC.
-source( paste0( source_path,  'main.R' ) )
+source( paste0( root,  'code/main.R' ) )
 
 # Read JPACT and TAPPS data ----------------------------------------------------
 
 if ( !exists('jpact') ) {
-  jpact = readRDS( paste0( source_path, 'jpact.rds') )
+  jpact = readRDS( paste0( root, 'data/output/jpact.rds') )
 }
 
 jpact = data.table( jpact )
 
-load( paste0( source_path, 'taps.RDS' ) )
+load( paste0( root, 'data/taps/taps.RDS' ) )
 
 
 # Call on another script that does the analysis --------------------------------

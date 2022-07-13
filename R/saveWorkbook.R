@@ -33,7 +33,7 @@ saveAsExcel  = function() {
     output$data_input <- shiny::renderUI({
 
       my_objs = ls( envir = .GlobalEnv )
-      my_objs_df = unlist( my_objs %>% purrr::map( ~ is.data.frame( eval( parse( text = .x ) ) ) ) )
+      my_objs_df = unlist( purrr::map( my_objs ~ is.data.frame( eval( parse( text = .x ) ) ) ) )
       my_objs = my_objs[ my_objs_df ]
 
       shiny::selectInput("tbl_selected", "",

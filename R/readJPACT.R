@@ -26,7 +26,7 @@ readJPACT = function() {
       code_readJPACT = rstudioapi::insertText(
         "# Read jpact data
     if ( !exists('jpact') ) {
-    jpact = readRDS( paste0(data_path, 'jpact.rds') )
+    jpact = readRDS( paste0(data_path, 'output/jpact.rds') )
     }"
       )
     })
@@ -34,7 +34,7 @@ readJPACT = function() {
     # User chooses to read jpact
     shiny::observeEvent( input$read_jpact, {
 
-      jpact <<- readRDS( 'S:/Advantage Data/DHR-Analytics/data/jpact.rds' )
+      jpact <<- readRDS( 'S:/Advantage Data/DHR-Analytics/data/output/jpact.rds' )
 
       update_time = format( Sys.time(), "%I:%M %p at %b %d, %Y")
 

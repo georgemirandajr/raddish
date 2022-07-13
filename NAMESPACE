@@ -1,5 +1,4 @@
 exportPattern("^[[:alpha:]]+")
-#' @import magrittr
 #' @import shiny
 #' @import miniUI
 #' @import rstudioapi

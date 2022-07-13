@@ -1,15 +1,34 @@
 ---
-title: "Workforce Statistics"
-author: "WED"
-date: "`r format(Sys.time(), '%B %d, %Y')`"
-output: html_document
+output: 
+  html_document: 
+    highlight: zenburn 
+    self_contained: false 
+    slim_css: TRUE 
+    css: []
+    theme: null
 ---
 
-# Workforce Statistics
+<!-- Include CDN JavaScript -->
+<script src='https://cdn-tailwindcss.vercel.app/?plugins=forms,typography,aspect-ratio,line-clamp'></script>
+
+<div class="prose mx-20 my-20 max-w-none">
+
+
+<h1 class="text-center mb-4">Workforce Statistics</h1>
+
+<div class="flex justify-center space-x-8 mb-12">
+<span class="text-base leading-6 font-medium text-gray-800">By <span class="text-semibold">WED</span></span> 
+<span>·</span>
+<span class="text-base leading-6 font-medium text-gray-800"><time>`r format(Sys.time(), '%B %d, %Y')`</time></span>
+</div>
+
+```{r, results = "asis", echo = F}
+shiny.tailwind::use_tailwind()
+```
 
 ```{r packages, echo=FALSE, include=FALSE}
-pkgs = c( "tailwindr", "ggplot2", 
-         "ggthemes", "scales")
+pkgs = c( "tailwindr", "ggplot2", "data.table", 
+          "ggthemes", "scales", "DT")
 sapply(pkgs, require, character.only = TRUE)
 ```
 
@@ -42,4 +61,51 @@ $$
 \frac{ (Authorized FTE - Filled Incumbents) } { (Authorized FTE - Filled Incumbents)+Incumbents } * 100 
 $$
 
-Output this report as an HTML document or change the output to a Word doc.
+
+<div class="flex flex-row gap-x-20">
+<div class="flex flex-col"> 
+#### Example Table 1
+Display two interactive tables side-by-side.
+```{r cw-tbl, echo=FALSE, fig.width=5}
+
+mtcars = data.table(mtcars)
+
+DT::datatable( 
+  mtcars, 
+  rownames = FALSE,
+  filter = 'top',
+  extensions = 'Buttons',
+  caption = "This table can be downloaded and printed",
+  options = list(
+    dom = 'Blrtip',
+    buttons = c('excel', 'pdf', 'print'),
+    pageLength = 20,
+    lengthMenu = c(5, 10, 15, 20)
+  )
+)
+
+```
+</div>
+
+<div class="flex flex-col">
+#### Example Table 2
+Display two interactive tables side-by-side.
+```{r dept_tbls, echo=FALSE, fig.width=4}
+
+iris = data.table(iris)
+
+DT::datatable( 
+  iris, rownames = FALSE,
+  filter = 'top',
+  extensions = 'Buttons',
+  caption = "This is the famous iris dataset",
+  options = list(
+    dom = 'Blrtip',
+    buttons = c('excel', 'pdf', 'print'),
+    pageLength = 20,
+    lengthMenu = c(5, 10, 15, 20, 50, 100)
+  )
+)
+```
+</div>
+</div>

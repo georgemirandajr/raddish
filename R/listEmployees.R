@@ -12,16 +12,16 @@ list_emps = function() {
 
     require(data.table)
 
-    df = df[ EFFECTIVE_DT <= date &
-               EXPIRATION_DT >= date ]
+    df = df[ get('EFFECTIVE_DT') <= date &
+               get('EXPIRATION_DT') >= date ]
 
-    df = df[, .SD[.N], by = EMPLOYEE_ID]
+    df = df[, .SD[.N], by = get('EMPLOYEE_ID')]
 
-    df = df[ EMPLMT_STA_CD %chin% c("A") &
-               !HOME_DEPT_CD %chin% c("GJ", "NL", "SC") ]
+    df = df[ get('EMPLMT_STA_CD') %chin% c("A") &
+               !get('HOME_DEPT_CD') %chin% c("GJ", "NL", "SC") ]
 
     if ( !is.null( sub_list) ) {
-      df = df[ SUB_TITLE_CD %chin% sub_list ]
+      df = df[ get('SUB_TITLE_CD') %chin% sub_list ]
     }
 
     if ( !is.null( filter_list ) ) {
@@ -63,7 +63,7 @@ list_emps = function() {
     output$data_input <- shiny::renderUI({
 
       my_objs = ls( envir = .GlobalEnv )
-      my_objs_df = unlist( my_objs %>% purrr::map( ~ is.data.frame( eval( parse( text = .x ) ) ) ) )
+      my_objs_df = unlist( purrr::map(my_objs, ~ is.data.frame( eval( parse( text = .x ) ) ) ) )
       my_objs = my_objs[ my_objs_df ]
 
       shiny::selectInput("tbl_selected", "",
