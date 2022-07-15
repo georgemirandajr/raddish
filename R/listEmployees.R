@@ -12,6 +12,10 @@ list_emps = function() {
 
     require(data.table)
 
+    if ( !data.table::is.data.table( df ) ) {
+      df = data.table::data.table( df )
+    }
+
     df = df[ get('EFFECTIVE_DT') <= date &
                get('EXPIRATION_DT') >= date ]
 
