@@ -18,9 +18,9 @@ Description: Read any e-HR extract fixed-width file
 Binding: importFWF
 Interactive: true
 
-Name: Filter current employees
-Description: Filter JPACT for a list of current employees. Requires specific columns.
-Binding: list_emps
+Name: Filter JPACT Data
+Description: Filter the JPACT dataset.
+Binding: subsetAddin
 Interactive: true
 
 Name: Save As Excel

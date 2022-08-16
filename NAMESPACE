@@ -6,4 +6,10 @@ exportPattern("^[[:alpha:]]+")
 #' @import readr
 #' @import openxlsx
 #' @importFrom purrr map
-#' @import openxlsx
+import(shiny)
+import(miniUI)
+import(rstudioapi)
+import(data.table)
+import(readr)
+import(openxlsx)
+import(purrr)
