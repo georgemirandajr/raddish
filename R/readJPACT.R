@@ -24,10 +24,11 @@ readJPACT = function() {
 
     shiny::observeEvent( input$insert_code, {
       code_readJPACT = rstudioapi::insertText(
-        "# Read jpact data
-    if ( !exists('jpact') ) {
-    jpact = readRDS( paste0(data_path, 'output/jpact.rds') )
-    }"
+        "
+# Read jpact data
+if ( !exists('jpact') ) {
+  jpact = readRDS( paste0(data_path, 'output/jpact.rds') )
+}"
       )
     })
 

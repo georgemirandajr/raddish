@@ -23,10 +23,11 @@ readJpactDate = function() {
 
     shiny::observeEvent( input$insert_code, {
       code_read = rstudioapi::insertText(
-        "# Read jpact date
-    if ( !exists('jpact_date') ) {
-    jpact_date = readRDS( paste0( data_path, 'output/jpact_file_date.rds') )
-    }"
+        "
+# Read jpact date
+if ( !exists('jpact_date') ) {
+  jpact_date = readRDS( paste0( data_path, 'output/jpact_file_date.rds') )
+}"
       )
     })
 
