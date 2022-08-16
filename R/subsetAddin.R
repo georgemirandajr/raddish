@@ -59,6 +59,45 @@ subsetAddin <- function() {
   # Server code for the gadget.
   server <- function(input, output, session) {
 
+    employee_list_at <- function( df, date = Sys.Date(),
+                                  sub_list = c("A", "D", "L", "N"),
+                                  filter_list = NULL,
+                                  grp = NULL
+    ) {
+
+      require(data.table)
+
+      if ( !data.table::is.data.table( df ) ) {
+        df = data.table::data.table( df )
+      }
+
+      df = data.table:::`[.data.table`( df, i = is.na( APPOINTMENT_ID )  )
+
+      df = data.table:::`[.data.table`( df, i = EFFECTIVE_DT <= date & EXPIRATION_DT >= date  )
+
+      df = data.table:::`[.data.table`( df, j = .SD[.N] , by = "EMPLOYEE_ID"  )
+
+      df = data.table:::`[.data.table`( df,
+                                        i = EMPLMT_STA_CD %chin% c("A") &
+                                          !HOME_DEPT_CD %chin% c("GJ", "NL", "SC")
+      )
+
+      if ( !is.null( sub_list) ) {
+        df = data.table:::`[.data.table`( df, i = SUB_TITLE_CD %chin% sub_list  )
+      }
+
+      if ( !is.null( filter_list ) ) {
+        df = df[ eval( parse( text = filter_list ) ) ]
+      }
+
+      if ( !is.null( grp ) ) {
+        df = data.table:::`[.data.table`( df, j = .(Count = .N), keyby = grp )
+        # df = df[, .(Count = .N), keyby = grp ]
+      }
+
+      return( df )
+    }
+
     output$data_input <- shiny::renderUI({
 
       my_objs = ls( envir = .GlobalEnv )
@@ -86,7 +125,7 @@ subsetAddin <- function() {
       date_picked <- input$date_selected
       selected_subs <- unlist( all_choices[ input$emp_type_input ], use.names = FALSE )
 
-      if (!exists(dataString, envir = .GlobalEnv))
+      if ( !exists(dataString, envir = .GlobalEnv) )
         return(errorMessage("data", paste("No dataset named '", dataString, "' available.")))
 
       data <- get(dataString, envir = .GlobalEnv)
@@ -103,7 +142,7 @@ subsetAddin <- function() {
 
       call <- as.call(
         list(
-          as.name("raddish::employee_list_at"),
+          as.name("employee_list_at"),
           data,
           date = date_picked,
           sub_list = selected_subs,
@@ -112,10 +151,10 @@ subsetAddin <- function() {
         )
       )
 
-      out_data <- eval( call, envir = .GlobalEnv )
+      out_data <- eval( call )
       out_data
 
-      assign( paste0( input$data, "_copy" ), value = out_data, pos = 1, envir = globalenv() )
+      assign( paste0( input$data, "_copy" ), value = out_data, pos = -1, envir = globalenv() )
     })
 
     output$pending <- shiny::renderUI({
