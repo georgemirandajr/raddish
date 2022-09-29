@@ -23,9 +23,9 @@ Description: Filter the JPACT dataset.
 Binding: subsetAddin
 Interactive: true
 
-Name: Save As Excel
-Description: Save a dataset as an Excel spreadsheet.
-Binding: saveAsExcel
+Name: Save As
+Description: Save a dataset to Excel or CSV.
+Binding: saveAs
 Interactive: true
 
 Name: Read FWF Snippet
@@ -61,4 +61,9 @@ Interactive: false
 Name: Email Setup Snippet
 Description: Sets up code to email with RDCOMClient
 Binding: email_setup
+Interactive: false
+
+Name: API Call
+Description: Sets up a basic API get call
+Binding: setupBasicAPI
 Interactive: false

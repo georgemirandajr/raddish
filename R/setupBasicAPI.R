@@ -2,7 +2,7 @@
 # Always refer to your specific API documentation
 require(rstudioapi)
 
-setupGetCall = function() {
+setupBasicAPI = function() {
   rstudioapi::insertText(
     "
 # Base URL

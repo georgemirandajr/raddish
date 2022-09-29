@@ -1,7 +1,7 @@
 Package: raddish
 Type: Package
 Title: R Add-ins to Make Life Easier
-Version: 0.2
+Version: 0.3
 Authors@R: person("George", "Miranda", email = "jmirandajr@hr.lacounty.gov",
   role = c("aut", "cre"))
 Imports:

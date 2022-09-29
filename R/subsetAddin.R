@@ -39,7 +39,6 @@ subsetAddin <- function() {
         shiny::uiOutput("data_input"),
         shiny::checkboxGroupInput("emp_type_input", "Employment Type",
                                   selected = "ft",
-                                  inline = TRUE,
                                   choiceNames = c("Full-Time Permanent",
                                                   "Part-Time Permanent",
                                                   "Temporary"),
@@ -47,8 +46,10 @@ subsetAddin <- function() {
         shiny::dateInput("date_selected", "Active on This Date", value = Sys.Date(),
                          min = "2012-04-01", max = Sys.Date(), format = "mm-dd-yyyy"),
         shiny::uiOutput("grouping"),
-        shiny::actionButton("apply_filters", "Apply Filters")
+        shiny::actionButton("apply_filters", "Apply Filters"),
         # shiny::textInput("subset", "Subset Expression")
+        shiny::textInput( "obj_name", label = "What do you want call this filtered data?",
+                         placeholder = "emp_counts" )
       ),
       shiny::uiOutput("pending"),
       shiny::dataTableOutput("output")
@@ -154,7 +155,9 @@ subsetAddin <- function() {
       out_data <- eval( call )
       out_data
 
-      assign( paste0( input$data, "_copy" ), value = out_data, pos = -1, envir = globalenv() )
+      objName = make.names( input$obj_name )
+      assign( objName, value = out_data, pos = -1, envir = globalenv() )
+
     })
 
     output$pending <- shiny::renderUI({
